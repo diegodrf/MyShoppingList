@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MyShoppingList.Application.Ports.Secondary;
 using MyShoppingList.Persistence;
+using MyShoppingList.Persistence.Repositories;
 
 namespace MyShoppingList.Configurator;
 
@@ -10,6 +12,10 @@ public static class ConfigurationExtensions
     {
         services.AddDbContext<MyShoppingListDbContext>(options =>
             options.UseNpgsql("Server=127.0.0.1;Port=5432;Database=myshoppinglistdevdb;User Id=postgres;Password=fk#Ws#ho5!SZMvHHW;"));
+
+        services.AddScoped<IGroupRepository, GroupRepository>();
+        services.AddScoped<IItemRepository, ItemRepository>();
+
         return services;
     }
 }
