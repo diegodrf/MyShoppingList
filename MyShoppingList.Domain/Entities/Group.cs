@@ -7,6 +7,6 @@
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? RemovedAt { get; set; }
 
-        public List<ItemGroup> Items { get; set; } = [];
+        public List<ItemGroup> ItemGroups { get; set; } = [];
     }
 }

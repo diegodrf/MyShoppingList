@@ -14,11 +14,11 @@ public class ItemGroupConfiguration : IEntityTypeConfiguration<ItemGroup>
         builder.HasIndex(x => new { x.ItemId, x.GroupId });
 
         builder.HasOne(x => x.Item)
-            .WithMany(x => x.Groups)
+            .WithMany(x => x.ItemGroups)
             .HasForeignKey(x => x.ItemId);
 
         builder.HasOne(x => x.Group)
-            .WithMany(g => g.Items)
+            .WithMany(g => g.ItemGroups)
             .HasForeignKey(ig => ig.GroupId);
     }
 }
