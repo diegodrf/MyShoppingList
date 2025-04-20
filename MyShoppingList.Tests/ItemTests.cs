@@ -12,20 +12,22 @@ public class ItemTests
     public async Task Should_Create_An_Item_In_A_Group()
     {
         // Arrange
-        var fakeRepository = A.Fake<IItemRepository>();
-        A.CallTo(() => fakeRepository.CreateAsync(A<Item>.Ignored, TestContext.Current.CancellationToken))
+        var fakeGroupRepository = A.Fake<IGroupRepository>();
+
+        var fakeItemRepository = A.Fake<IItemRepository>();
+        A.CallTo(() => fakeItemRepository.CreateAsync(A<Item>.Ignored, TestContext.Current.CancellationToken))
             .Returns(Task.FromResult(new Item { Id = 1, Name = string.Empty }));
-        A.CallTo(() => fakeRepository.GetByIdAsync(A<int>.Ignored, TestContext.Current.CancellationToken))
+        A.CallTo(() => fakeItemRepository.GetByIdAsync(A<int>.Ignored, TestContext.Current.CancellationToken))
             .Returns(Task.FromResult<Item?>(new Item
             {
                 Id = 1,
                 Name = string.Empty,
-                Groups = [.. Enumerable
+                ItemGroups = [.. Enumerable
                     .Range(0, 1)
                     .Select(id => new ItemGroup { Id = id })]
             }));
 
-        var sut = new CreateItemHandler(fakeRepository);
+        var sut = new CreateItemHandler(fakeGroupRepository, fakeItemRepository);
 
         // Act
         var item = await sut.HandleAsync(A.Dummy<CreateItemCommand>(), TestContext.Current.CancellationToken);
@@ -47,7 +49,7 @@ public class ItemTests
             {
                 Id = 1,
                 Name = string.Empty,
-                Groups = [.. Enumerable
+                ItemGroups = [.. Enumerable
                     .Range(0, 1)
                     .Select(id => new ItemGroup { Id = id })]
             }));
@@ -73,7 +75,7 @@ public class ItemTests
             {
                 Id = 1,
                 Name = string.Empty,
-                Groups = [.. Enumerable
+                ItemGroups = [.. Enumerable
                     .Range(0, 1)
                     .Select(id => new ItemGroup { Id = id })]
             }));
@@ -91,15 +93,16 @@ public class ItemTests
     public async Task Should_Add_An_Item_In_A_Group()
     {
         // Arrange
-        var fakeRepository = A.Fake<IGroupRepository>();
+        var fakeItemRepository = A.Fake<IItemRepository>();
+        var fakeGroupRepository = A.Fake<IGroupRepository>();
 
-        var sut = new AddItemInGroupHandler(fakeRepository);
+        var sut = new AddItemInGroupHandler(fakeGroupRepository, fakeItemRepository);
 
         // Act
         await sut.HandleAsync(A.Dummy<AddItemInGroupCommand>(), TestContext.Current.CancellationToken);
 
         // Assert
-        A.CallTo(() => fakeRepository.AddItemAsync(An<int>.Ignored, An<int>.Ignored, TestContext.Current.CancellationToken))
+        A.CallTo(() => fakeGroupRepository.UpdateAsync(A<Group>.Ignored, TestContext.Current.CancellationToken))
             .MustHaveHappenedOnceExactly();
     }
 
