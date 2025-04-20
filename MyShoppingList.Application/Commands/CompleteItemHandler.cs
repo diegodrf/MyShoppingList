@@ -20,7 +20,7 @@ public class CompleteItemHandler : IHandler<CompleteItemCommand, ReadItemRespons
             return null;
         }
 
-        item.Groups
+        item.ItemGroups
             .First(x => x.GroupId == command.GroupId)
             .Completed_At = DateTime.UtcNow;
 

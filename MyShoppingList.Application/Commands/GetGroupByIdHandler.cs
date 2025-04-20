@@ -24,7 +24,7 @@ public class GetGroupByIdHandler : IHandler<GetGroupByIdCommand, ReadGroupRespon
             Id = group.Id,
             Name = group.Name,
             CreatedAt = group.CreatedAt,
-            Items = [.. group.Items.Select(x => new ReadItemResponse
+            Items = [.. group.ItemGroups.Select(x => new ReadItemResponse
             {
                 Id = x.Item.Id,
                 Name = x.Item.Name,

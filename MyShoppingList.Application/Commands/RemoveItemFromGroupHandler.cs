@@ -23,7 +23,7 @@ public class RemoveItemFromGroupHandler : IHandler<RemoveItemFromGroupCommand, R
             Id = group.Id,
             Name = group.Name,
             CreatedAt = group.CreatedAt,
-            Items = [.. group.Items.Select(x => new ReadItemResponse
+            Items = [.. group.ItemGroups.Select(x => new ReadItemResponse
             {
                 Id = x.Id,
                 Name = x.Item!.Name,

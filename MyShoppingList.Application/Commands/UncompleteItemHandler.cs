@@ -19,7 +19,7 @@ public class UncompleteItemHandler : IHandler<UncompleteItemCommand, ReadItemRes
             return null;
         }
         
-        item.Groups
+        item.ItemGroups
             .First(x => x.GroupId == command.GroupId)
             .Completed_At = null;
         

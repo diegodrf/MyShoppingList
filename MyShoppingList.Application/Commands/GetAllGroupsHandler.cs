@@ -20,7 +20,7 @@ public class GetAllGroupsHandler : IHandler<GetAllGroupsCommand, IReadOnlyList<R
             Id = group.Id,
             Name = group.Name,
             CreatedAt = group.CreatedAt,
-            Items = [.. group.Items.Select(x => new ReadItemResponse
+            Items = [.. group.ItemGroups.Select(x => new ReadItemResponse
             {
                 Id = x.Item.Id,
                 Name = x.Item.Name,
