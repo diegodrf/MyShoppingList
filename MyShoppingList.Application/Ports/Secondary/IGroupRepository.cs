@@ -6,4 +6,6 @@ public interface IGroupRepository
     Task<Group> CreateAsync(Group group, CancellationToken cancellationToken);
     Task<Group?> GetByIdAsync(int id, CancellationToken cancellationToken);
     Task<List<Group>> GetAllAsync(CancellationToken cancellationToken);
+    Task AddItemAsync(int groupId, int ItemId, CancellationToken cancellationToken);
+    Task RemoveItemAsync(int groupId, int ItemId, CancellationToken cancellationToken);
 }

@@ -6,6 +6,6 @@ public class ItemGroup
     public int GroupId { get; set; }
     public DateTime? Completed_At { get; set; }
 
-    public required Item Item { get; set; }
-    public required Group Groups { get; set; }
+    public Item? Item { get; set; }
+    public Group? Groups { get; set; }
 }
