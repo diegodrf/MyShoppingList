@@ -17,8 +17,8 @@ public class AddItemInGroupHandler : IHandler<AddItemInGroupCommand, ReadGroupRe
 
     public async Task<ReadGroupResponse?> HandleAsync(AddItemInGroupCommand command, CancellationToken cancellationToken)
     {
-        var item = await _itemRepository.GetByIdAsync(command.Id, cancellationToken)
-            ?? throw new ArgumentException($"Item with id {command.Id} not found.");
+        var item = await _itemRepository.GetByIdAsync(command.ItemId, cancellationToken)
+            ?? throw new ArgumentException($"Item with id {command.ItemId} not found.");
 
         var group = await _groupRepository.GetByIdAsync(command.GroupId, cancellationToken)
             ?? throw new ArgumentException($"Group with id {command.GroupId} not found.");
@@ -39,7 +39,7 @@ public class AddItemInGroupHandler : IHandler<AddItemInGroupCommand, ReadGroupRe
             CreatedAt = group.CreatedAt,
             Items = [.. group.ItemGroups.Select(x => new ReadItemResponse
             {
-                Id = x.Id,
+                Id = x.ItemId,
                 Name = x.Item!.Name,
                 CreatedAt = x.Item.CreatedAt,
                 Done = x.Completed_At != null,
@@ -50,6 +50,6 @@ public class AddItemInGroupHandler : IHandler<AddItemInGroupCommand, ReadGroupRe
 
 public class AddItemInGroupCommand : IRequest<ReadGroupResponse?>
 {
-    public required int Id { get; set; }
+    public required int ItemId { get; set; }
     public required int GroupId { get; set; }
 }

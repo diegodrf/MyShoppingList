@@ -12,7 +12,7 @@ public class RemoveItemFromGroupHandler : IHandler<RemoveItemFromGroupCommand, R
     }
     public async Task<ReadGroupResponse?> HandleAsync(RemoveItemFromGroupCommand command, CancellationToken cancellationToken)
     {
-        await _groupRepository.RemoveItemAsync(command.GroupId, command.Id, cancellationToken);
+        await _groupRepository.RemoveItemAsync(command.GroupId, command.ItemId, cancellationToken);
         var group = await _groupRepository.GetByIdAsync(command.GroupId, cancellationToken);
         if (group == null)
         {
@@ -25,7 +25,7 @@ public class RemoveItemFromGroupHandler : IHandler<RemoveItemFromGroupCommand, R
             CreatedAt = group.CreatedAt,
             Items = [.. group.ItemGroups.Select(x => new ReadItemResponse
             {
-                Id = x.Id,
+                Id = x.ItemId,
                 Name = x.Item!.Name,
                 CreatedAt = x.Item.CreatedAt,
                 Done = x.Completed_At != null,
@@ -36,6 +36,6 @@ public class RemoveItemFromGroupHandler : IHandler<RemoveItemFromGroupCommand, R
 
 public class RemoveItemFromGroupCommand : IRequest<ReadGroupResponse?>
 {
-    public required int Id { get; set; }
+    public required int ItemId { get; set; }
     public required int GroupId { get; set; }
 }

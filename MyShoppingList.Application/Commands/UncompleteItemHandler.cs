@@ -12,7 +12,7 @@ public class UncompleteItemHandler : IHandler<UncompleteItemCommand, ReadItemRes
     }
     public async Task<ReadItemResponse?> HandleAsync(UncompleteItemCommand command, CancellationToken cancellationToken)
     {
-        var item = await _itemRepository.GetByIdAsync(command.Id, cancellationToken);
+        var item = await _itemRepository.GetByIdAsync(command.ItemId, cancellationToken);
         
         if (item == null)
         {
@@ -37,6 +37,6 @@ public class UncompleteItemHandler : IHandler<UncompleteItemCommand, ReadItemRes
 
 public class UncompleteItemCommand : IRequest<ReadItemResponse?>
 {
-    public required int Id { get; set; }
+    public required int ItemId { get; set; }
     public required int GroupId { get; set; }
 }
