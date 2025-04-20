@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MyShoppingList.Domain\MyShoppingList.Domain.csproj" />
+    <ProjectReference Include="..\MyShoppingList.Application\MyShoppingList.Application.csproj" />
   </ItemGroup>
 
 </Project>
