@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Mvc;
+using MyShoppingList.Application.Commands;
 using MyShoppingList.Configurator;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,32 +17,133 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference("/docs", options =>
+    {
+        options.WithDarkMode(false);
+    });
 }
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+var version1 = app.MapGroup("/v1");
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+var groupRoutes = version1.MapGroup("/group");
+groupRoutes.MapPost("/", CreateGroupAsync);
+groupRoutes.MapGet("/", ListAllGroupsAsync);
+groupRoutes.MapGet("/{id}", GetGroupByIdAsync);
+groupRoutes.MapPost("/{groupId}/item", CreateItemAsync);
+groupRoutes.MapPost("/{groupId}/item/{itemId}", AddItemAsync);
+groupRoutes.MapDelete("/{groupId}/item/{itemId}", RemoveItemAsync);
+groupRoutes.MapPost("/{groupId}/item/{itemId}/complete", CompleteItemAsync);
+groupRoutes.MapPost("/{groupId}/item/{itemId}/uncomplete", UncompleteItemAsync);
+
+var itemRoutes = version1.MapGroup("/item");
+
 
 app.Run();
 
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+static async Task<IResult> CreateGroupAsync(
+    CreateGroupCommand command,
+    CreateGroupHandler handler,
+    CancellationToken cancellationToken)
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    var group = await handler.HandleAsync(command, cancellationToken);
+    return TypedResults.Created($"/v1/group/{group.Id}", group);
+}
+
+static async Task<IResult> ListAllGroupsAsync(
+    GetAllGroupsHandler handler,
+    CancellationToken cancellationToken)
+{
+    var groups = await handler.HandleAsync(new GetAllGroupsCommand(), cancellationToken);
+    return TypedResults.Ok(groups);
+}
+
+static async Task<IResult> GetGroupByIdAsync(
+    int id,
+    GetGroupByIdHandler handler,
+    CancellationToken cancellationToken)
+{
+    var command = new GetGroupByIdCommand { Id = id };
+    var result = await handler.HandleAsync(command, cancellationToken);
+    if (result is null)
+    {
+        return TypedResults.NotFound();
+    }
+    return TypedResults.Ok(result);
+}
+
+static async Task<IResult> AddItemAsync(
+    int groupId,
+    int itemId,
+    AddItemInGroupHandler handler,
+    CancellationToken cancellationToken)
+{
+    var command = new AddItemInGroupCommand { GroupId = groupId, ItemId = itemId };
+    var result = await handler.HandleAsync(command, cancellationToken);
+    if (result is null)
+    {
+        return TypedResults.NotFound();
+    }
+    return TypedResults.Ok(result);
+}
+
+static async Task<IResult> RemoveItemAsync(
+    int groupId,
+    int itemId,
+    RemoveItemFromGroupHandler handler,
+    CancellationToken cancellationToken)
+{
+    var command = new RemoveItemFromGroupCommand { GroupId = groupId, ItemId = itemId };
+    var result = await handler.HandleAsync(command, cancellationToken);
+    if (result is null)
+    {
+        return TypedResults.NotFound();
+    }
+    return TypedResults.Ok(result);
+}
+
+static async Task<IResult> CompleteItemAsync(
+    int groupId,
+    int itemId,
+    CompleteItemHandler handler,
+    CancellationToken cancellationToken)
+{
+    var command = new CompleteItemCommand { GroupId = groupId, ItemId = itemId };
+    var result = await handler.HandleAsync(command, cancellationToken);
+    if (result is null)
+    {
+        return TypedResults.NotFound();
+    }
+    return TypedResults.Ok(result);
+}
+
+static async Task<IResult> UncompleteItemAsync(
+    int groupId,
+    int itemId,
+    UncompleteItemHandler handler,
+    CancellationToken cancellationToken)
+{
+    var command = new UncompleteItemCommand { GroupId = groupId, ItemId = itemId };
+    var result = await handler.HandleAsync(command, cancellationToken);
+    if (result is null)
+    {
+        return TypedResults.NotFound();
+    }
+    return TypedResults.Ok(result);
+}
+
+static async Task<IResult> CreateItemAsync(
+    [FromRoute] int groupId,
+    [FromBody] string name,
+    CreateItemHandler handler,
+    CancellationToken cancellationToken)
+{
+    var command = new CreateItemCommand { GroupId = groupId, Name = name };
+    var result = await handler.HandleAsync(command, cancellationToken);
+    if (result is null)
+    {
+        return TypedResults.NotFound();
+    }
+    return TypedResults.Ok(result);
 }
