@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MyShoppingList.Application.Commands;
 using MyShoppingList.Application.Ports.Secondary;
 using MyShoppingList.Persistence;
 using MyShoppingList.Persistence.Repositories;
@@ -15,6 +16,15 @@ public static class ConfigurationExtensions
 
         services.AddScoped<IGroupRepository, GroupRepository>();
         services.AddScoped<IItemRepository, ItemRepository>();
+
+        services.AddTransient<AddItemInGroupHandler>();
+        services.AddTransient<CompleteItemHandler>();
+        services.AddTransient<CreateGroupHandler>();
+        services.AddTransient<CreateItemHandler>();
+        services.AddTransient<GetAllGroupsHandler>();
+        services.AddTransient<GetGroupByIdHandler>();
+        services.AddTransient<RemoveItemFromGroupHandler>();
+        services.AddTransient<UncompleteItemHandler>();
 
         return services;
     }
