@@ -7,5 +7,5 @@ public class ItemGroup
     public DateTime? Completed_At { get; set; }
 
     public Item? Item { get; set; }
-    public Group? Groups { get; set; }
+    public Group? Group { get; set; }
 }

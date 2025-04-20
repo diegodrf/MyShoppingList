@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShoppingList.Domain", "MyShoppingList.Domain\MyShoppingList.Domain.csproj", "{FCA70BE4-5274-4901-9DC9-DA941921347D}"
 EndProject
@@ -9,10 +9,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShoppingList.Tests", "MyS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShoppingList.Application", "MyShoppingList.Application\MyShoppingList.Application.csproj", "{98299413-077A-4E49-8671-4E966E1BDAC6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7C85BBFB-7068-4D7C-858A-37093DDEDE7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShoppingList.Persistence", "MyShoppingList.Persistence\MyShoppingList.Persistence.csproj", "{0766EBFD-C48D-42C8-A8B3-D1B177457111}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{CF0747F4-A73F-4F20-8FFC-CB55969FCA4E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E87DCB6C-4AD3-44F0-980D-05C836EED217}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShoppingList.Configurator", "MyShoppingList.Configurator\MyShoppingList.Configurator.csproj", "{058A753A-13E9-4ADB-886A-E136C8F27849}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyShoppingList.WebApi", "MyShoppingList.WebApi\MyShoppingList.WebApi.csproj", "{6D249E0A-65B2-4DA8-B1E4-54C00DD6E9CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +44,27 @@ Global
 		{98299413-077A-4E49-8671-4E966E1BDAC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98299413-077A-4E49-8671-4E966E1BDAC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98299413-077A-4E49-8671-4E966E1BDAC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0766EBFD-C48D-42C8-A8B3-D1B177457111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0766EBFD-C48D-42C8-A8B3-D1B177457111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0766EBFD-C48D-42C8-A8B3-D1B177457111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0766EBFD-C48D-42C8-A8B3-D1B177457111}.Release|Any CPU.Build.0 = Release|Any CPU
+		{058A753A-13E9-4ADB-886A-E136C8F27849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{058A753A-13E9-4ADB-886A-E136C8F27849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{058A753A-13E9-4ADB-886A-E136C8F27849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{058A753A-13E9-4ADB-886A-E136C8F27849}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D249E0A-65B2-4DA8-B1E4-54C00DD6E9CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D249E0A-65B2-4DA8-B1E4-54C00DD6E9CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D249E0A-65B2-4DA8-B1E4-54C00DD6E9CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D249E0A-65B2-4DA8-B1E4-54C00DD6E9CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FCA70BE4-5274-4901-9DC9-DA941921347D} = {CF0747F4-A73F-4F20-8FFC-CB55969FCA4E}
+		{3C825200-691F-4FBF-9F3F-B06354259E60} = {E87DCB6C-4AD3-44F0-980D-05C836EED217}
+		{98299413-077A-4E49-8671-4E966E1BDAC6} = {CF0747F4-A73F-4F20-8FFC-CB55969FCA4E}
+		{0766EBFD-C48D-42C8-A8B3-D1B177457111} = {7C85BBFB-7068-4D7C-858A-37093DDEDE7D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B1993A31-A5A4-4627-9724-9376AB481272}

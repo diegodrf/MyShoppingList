@@ -8,10 +8,5 @@
         public DateTime? RemovedAt { get; set; }
 
         public List<ItemGroup> Items { get; set; } = [];
-
-        public Group()
-        {
-            
-        }
     }
 }
