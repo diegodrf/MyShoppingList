@@ -9,6 +9,9 @@ services:
       - "5001:8081"
     environment:
       CONNECTIONSTRINGS__POSTGRES: "Server=${DB_HOST};Port=${DB_PORT};Database=${DB_NAME};User Id=${DB_USER};Password=${DB_PASSWORD};"
+    depends_on:
+      myshoppinglist.db:
+        condition: service_started
   
   myshoppinglist.db:
     image: postgres:latest
