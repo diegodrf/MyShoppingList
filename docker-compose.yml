@@ -1,0 +1,23 @@
+services:
+  myshoppinglist.webapi:
+    image: ${DOCKER_REGISTRY-}myshoppinglistwebapi
+    build:
+      context: .
+      dockerfile: MyShoppingList.WebApi/Dockerfile
+    ports:
+      - "5000:8080"
+      - "5001:8081"
+    environment:
+      CONNECTIONSTRINGS__POSTGRES: "Server=${DB_HOST};Port=${DB_PORT};Database=${DB_NAME};User Id=${DB_USER};Password=${DB_PASSWORD};"
+  
+  myshoppinglist.db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "6000:5432"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ${USERPROFILE}/.containers/myshoppinglistdevdb:/var/lib/postgresql/data

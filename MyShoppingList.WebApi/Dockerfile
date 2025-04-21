@@ -13,6 +13,10 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["MyShoppingList.WebApi/MyShoppingList.WebApi.csproj", "MyShoppingList.WebApi/"]
+COPY ["MyShoppingList.Configurator/MyShoppingList.Configurator.csproj", "MyShoppingList.Configurator/"]
+COPY ["MyShoppingList.Application/MyShoppingList.Application.csproj", "MyShoppingList.Application/"]
+COPY ["MyShoppingList.Domain/MyShoppingList.Domain.csproj", "MyShoppingList.Domain/"]
+COPY ["MyShoppingList.Persistence/MyShoppingList.Persistence.csproj", "MyShoppingList.Persistence/"]
 RUN dotnet restore "./MyShoppingList.WebApi/MyShoppingList.WebApi.csproj"
 COPY . .
 WORKDIR "/src/MyShoppingList.WebApi"
