@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyShoppingList.Application.Commands;
@@ -28,5 +29,12 @@ public static class ConfigurationExtensions
         services.AddTransient<UncompleteItemHandler>();
 
         return services;
+    }
+
+    public static void ApplyMigrations(this IApplicationBuilder applicationBuilder)
+    {
+        using var scope = applicationBuilder.ApplicationServices.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<MyShoppingListDbContext>();
+        dbContext.Database.Migrate();
     }
 }
