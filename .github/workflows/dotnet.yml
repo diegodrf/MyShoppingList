@@ -13,18 +13,17 @@ jobs:
   build-and-test:
 
     runs-on: ubuntu-latest
-
+    env:
+      SLN_FILE: $(ls *.sln 2>/dev/null); [ "$(echo "$sln" | wc -l)" -eq 1 ] && echo "$sln" || { echo "Expected exactly one .sln file, found $(echo "$sln" | wc -l)." >&2; exit 1; }
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
-    - name: Get solution file
-      run: sln=$(ls *.sln 2>/dev/null); [ "$(echo "$sln" | wc -l)" -eq 1 ] && echo "$sln" || { echo "Expected exactly one .sln file, found $(echo "$sln" | wc -l)." >&2; exit 1; } >> $SOLUTION_FILE
     - name: Restore dependencies
-      run: dotnet restore $SOLUTION_FILE
+      run: dotnet restore $SLN_FILE
     - name: Build
-      run: dotnet build $SOLUTION_FILE --no-restore
+      run: dotnet build $SLN_FILE --no-restore
     - name: Test
-      run: dotnet test $SOLUTION_FILE --no-build --verbosity normal
+      run: dotnet test $SLN_FILE --no-build --verbosity normal
