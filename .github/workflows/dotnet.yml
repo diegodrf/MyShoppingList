@@ -14,7 +14,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      SLN_FILE: $(ls *.sln 2>/dev/null); [ "$(echo "$sln" | wc -l)" -eq 1 ] && echo "$sln" || { echo "Expected exactly one .sln file, found $(echo "$sln" | wc -l)." >&2; exit 1; }
+      SLN_FILE: MyShoppingList.sln
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
