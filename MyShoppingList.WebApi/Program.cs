@@ -24,7 +24,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 var version1 = app.MapGroup("/v1");
 
