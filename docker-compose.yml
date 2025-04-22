@@ -17,10 +17,13 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-  myshoppinglist.db:
+    depends_on:
+      myshoppinglist.db:
+        condition: service_healthy
   
   myshoppinglist.db:
     image: postgres:latest
+    restart: always
     ports:
       - "6000:5432"
     environment:
@@ -29,3 +32,8 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ${USERPROFILE}/.containers/myshoppinglistdevdb:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${DB_USER} -d ${DB_NAME}'"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
